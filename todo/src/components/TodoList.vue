@@ -1,12 +1,16 @@
 <template>
+  <div>
     <h1>{{title}}</h1>
+    <h1 v-if="isDone == true">This is done</h1>
+  </div>
 </template>
 
 <script>
 export default {
   name: "TodoList",
   props: {
-    title: String
+    title: String,
+    isDone: Boolean
   }
 };
 </script>

@@ -6,8 +6,9 @@
       <button @click="clearAllItems()">Clear list</button>
     </div>
     <div v-for="item in todoItems" :key="item.todo">
-      <TodoList :title="item.todo" />
+      <TodoList :title="item.todo" :isDone="item.isDone"/>
       <button @click="removeItem(item.id)">remove this item</button>
+      <button @click="markAsDone(item.id)">Mark this item as done</button>
     </div>
   </div>
 </template>
@@ -28,7 +29,7 @@ export default {
   methods: {
     addTodoItem(){
       this.todoItems.push(
-        {todo: document.getElementById("todoInput").value, id: this.todoItems.length}
+        {todo: document.getElementById("todoInput").value, id: this.todoItems.length, isDone: false}
       );
     },
     removeItem(id){
@@ -41,6 +42,18 @@ export default {
     },
     clearAllItems(){
       this.todoItems = []
+    },
+    markAsDone(id){
+      for(var i = 0; i < this.todoItems.length; i++){
+        if(this.todoItems[i].id == id){
+          if(this.todoItems[i].isDone == false){
+            this.todoItems[i].isDone = true;
+          }
+          else{
+            this.todoItems[i].isDone = false;
+          }
+        }
+      }
     }
   }
 }
