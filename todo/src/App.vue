@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <div>
-      <input type="text" id="todoInput">
+      <input type="text" id="todoInput" />
       <button @click="addTodoItem()">Add to list</button>
       <button @click="clearAllItems()">Clear list</button>
-
     </div>
     <div v-for="item in todoItems" :key="item.todo">
-      <TodoList :title="item.todo"/>
+      <TodoList :title="item.todo" />
+      <button @click="removeItem(item.id)">remove this item</button>
     </div>
   </div>
 </template>
@@ -28,8 +28,16 @@ export default {
   methods: {
     addTodoItem(){
       this.todoItems.push(
-        {todo: document.getElementById("todoInput").value}
+        {todo: document.getElementById("todoInput").value, id: this.todoItems.length}
       );
+    },
+    removeItem(id){
+      for(var i = 0; i < this.todoItems.length; i++){
+        if(this.todoItems[i].id == id){
+          this.$delete(this.todoItems, i)
+          break;
+        }
+      }
     },
     clearAllItems(){
       this.todoItems = []
