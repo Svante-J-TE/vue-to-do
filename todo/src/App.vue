@@ -6,57 +6,60 @@
       <button @click="clearAllItems()">Clear list</button>
     </div>
     <div v-for="item in todoItems" :key="item.todo">
-      <TodoList :title="item.todo" :isDone="item.isDone"/>
+      <TodoList :title="item.todo" :isDone="item.isDone" />
       <button @click="removeItem(item.id)">remove this item</button>
-      <button @click="markAsDone(item.id)">Mark this item as done</button>
+      <button @click="markAsDone(item.id)" id="isDoneBtn">Mark this item as done</button>
     </div>
   </div>
 </template>
 
 <script>
-import TodoList from './components/TodoList'
+import TodoList from "./components/TodoList";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    TodoList
+    TodoList,
   },
-    data(){
-    return{
-      todoItems: []
-    }
+  data() {
+    return {
+      todoItems: [],
+    };
   },
   methods: {
-    addTodoItem(){
-      this.todoItems.push(
-        {todo: document.getElementById("todoInput").value, id: this.todoItems.length, isDone: false}
-      );
+    addTodoItem() {
+      this.todoItems.push({
+        todo: document.getElementById("todoInput").value,
+        id: this.todoItems.length,
+        isDone: false,
+      });
     },
-    removeItem(id){
-      for(var i = 0; i < this.todoItems.length; i++){
-        if(this.todoItems[i].id == id){
-          this.$delete(this.todoItems, i)
+    removeItem(id) {
+      for (var i = 0; i < this.todoItems.length; i++) {
+        if (this.todoItems[i].id == id) {
+          this.$delete(this.todoItems, i);
           break;
         }
       }
     },
-    clearAllItems(){
-      this.todoItems = []
+    clearAllItems() {
+      this.todoItems = [];
     },
-    markAsDone(id){
-      for(var i = 0; i < this.todoItems.length; i++){
-        if(this.todoItems[i].id == id){
-          if(this.todoItems[i].isDone == false){
+    markAsDone(id) {
+      for (var i = 0; i < this.todoItems.length; i++) {
+        if (this.todoItems[i].id == id) {
+          if (this.todoItems[i].isDone == false) {
             this.todoItems[i].isDone = true;
-          }
-          else{
+            document.getElementById("isDoneBtn").innerHTML = "Mark this item as not done";
+          } else {
             this.todoItems[i].isDone = false;
+            document.getElementById("isDoneBtn").innerHTML = "Mark this item as done";
           }
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
